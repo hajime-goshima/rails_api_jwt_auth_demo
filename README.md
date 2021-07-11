@@ -1,6 +1,35 @@
+# Rails API JWT Auth Demo
+
+Rails6でdevise-jwtを使ったjwt認証を実現するバックエンドAPIサーバーのサンプルです。 フロントエンドをReactやVue等をベースとしたフレームワークを使用しているプロジェクトのバックエンド利用を想定しています。
+## 概要
+  
+Json Web Tokenを利用した認証システムを採用することがデファクトスタンダードとなりつつあります。FirebaseなどのSaaSを利用しない限り、必ずと言っていいほどバックエンドへのJWT認証の実装が必要です。
+このサンプルはRails6をAPIモードで作成した、JWT認証実装のサンプルとなります。
+
+## 使用方法
+
+dockerkコンテナ化されています。
+```
+docker-compose build
+docker-compose up
+```
+
+デフォルトで、3001番ポートをリッスンします。  
+http://localhost:3001
+
+## 補足情報
+
 ### DeviseJWTシークレットーキー
 
-`rake secret`で生成したシークレットキーを`credentials.yml.enc`に保存しています。（パス：`devise_jwt_secret_key_base`）
+`rake secret`で生成したシークレットキーを`credentials.yml.enc`に格納 しています。
+キー名：`devise_jwt_secret_key_base`  
+
+利用前にはこのシークレットキーを再生成し、更新して下さい。
+
+通常は秘匿すべき情報ですが、パプリックに公開する都合上`config/master.key`を公開します。再利用の場合は取扱にご注意下さい。
+```
+0bc12c1721c610ac4f954c95049a2ac2
+```
 
 ### CORS設定
 
@@ -20,11 +49,10 @@ Deviseは、下記の条件のいずれかを満たさない限りは、ユー�
 - config.skip_session_storageに:params_authが含まれている
 - Railsリクエストフォージェリが未承認になる（APIモードでは通常、非アクティブ化されている）
 
-そのため、JWT認証を強制するためには下記の設定を行います。
+そのため、JWT認証を強制するためには下記の設定を行っています。
+`config/initializers/devise.rb`
 
 ```
-config/initializers/devise.rb
-
 config.skip_session_storage = [:http_auth, :params_auth]
 ```
 
