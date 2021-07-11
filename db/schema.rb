@@ -12,16 +12,16 @@
 
 ActiveRecord::Schema.define(version: 2021_07_11_074029) do
 
-  create_table "allowlisted_jwts", force: :cascade do |t|
+  create_table "allowlisted_jwts", charset: "utf8mb4", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud", null: false
     t.datetime "exp", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
