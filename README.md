@@ -45,16 +45,11 @@ https://github.com/cyu/rack-cors#configuration-reference
 
 Deviseは、下記の条件のいずれかを満たさない限りは、ユーザーセッション（デフォルト：Cookie）で認証を行います。  
 
-- セッションが無効化されている
+- セッションが無効化されている（APIモードではデフォルトで無効化されている）
 - config.skip_session_storageに:params_authが含まれている
 - Railsリクエストフォージェリが未承認になる（APIモードでは通常、非アクティブ化されている）
 
-そのため、JWT認証を強制するためには下記の設定を行っています。
-`config/initializers/devise.rb`
-
-```
-config.skip_session_storage = [:http_auth, :params_auth]
-```
+APIモードで作成されているため、既にJWT認証が強制されています、
 
 詳細は下記を参照して下さい。  
 https://github.com/waiting-for-dev/devise-jwt#session-storage-caveat
